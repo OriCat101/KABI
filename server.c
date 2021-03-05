@@ -1,4 +1,4 @@
-#include <studio.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -10,17 +10,17 @@
 
 int main() {
 
-  int sock. client_socket;
+  int sock, client_socket;
   char buffer[1024];
   char response[18384];
-  struct sockaddr_in, server_address, client_address;
+  struct sockaddr_in server_address, client_address;
   int i=0;
   int optval = 1;
   socklen_t client_length;
 
   sock = socket(AF_INET, SOCK_STREAM,  0);
 
-  if (setsockopt(sock, SOL_SOCKET, SOL_REUSEADDR, &optval, sizeof(optval)) < 0) {
+  if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) < 0) {
       printf("Error Setting TCP Socket Options!\n");
       return 1;
   }
@@ -44,13 +44,14 @@ int main() {
     strtok(buffer, "\n");
     write(client_socket, buffer, sizeof(buffer));
 
-    if (strncmp("q", buffer, 1) == =){
+    if (strncmp("q", buffer, 1) == 0){
       break;
     }
     else{
        recv(client_socket, response, sizeof(response), MSG_WAITALL);
        printf("%s", response);
     }
-  }
 
+  }
+  
 }

