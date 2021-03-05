@@ -21,4 +21,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
   struct sockaddr_in SerAddr;
   unsigned short ServPort;
   char *ServIP;
+  WSADATA wsaData;
+
+  ServIP = "192.168.1.224";
+  ServPort = 3141;
+
+  if(WSAStartup(MAKEWORD(2,0), &wsaData) != 0) {
+    exit(1);
+  }
 }
