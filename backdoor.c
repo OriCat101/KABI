@@ -9,3 +9,12 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCmdShow){
+
+  HWND stealth;
+  AlloConsole();
+  stealth = FindWindowA("ConsoleWindowClass", NULL);
+
+  ShowWindow(stealth, 0)
+}
