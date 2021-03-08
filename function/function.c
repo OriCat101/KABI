@@ -15,7 +15,25 @@ str_cut(char str[], int slice_from, int slice_to){
       slice_from = (-1) * str_len;
 
     buffer_len = slice_to - slice_from;
+    str += (str_len + slice_from);
 
   }
 
+  else if (slice_from >= 0 && slice_to > slice_from) {
+    str_len = strlen(str);
+
+    if (slice_from > str_len - 1)
+      return NULL;
+    buffer_len = slice_to - slice_from;
+    str += slice_from;
+
+  }
+
+  else
+    return NULL;
+
+  buffer = calloc(buffer_len, sizeof(char));
+  strncpy(buffer, str, buffer_len);
+  return buffer;
+  
 }
